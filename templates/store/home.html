@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -95,7 +96,11 @@
                                      style="top: 0.5rem;
                                             right: 0.5rem">Sale</div>
                                 <!-- Product image-->
-                                <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                                <img class="card-img-top"
+                                     style="height:15rem;
+                                            object-fit:cover"
+                                     src="{{ product.image.url }}"
+                                     alt="..." />
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
@@ -110,8 +115,8 @@
                                             <div class="bi-star-fill"></div>
                                         </div>
                                         <!-- Product price-->
-                                        <span class="text-muted text-decoration-line-through">{{ product.price }}</span>
-                                        {{ product.price }}
+                                        <span class="text-muted text-decoration-line-through">{{ product.price|floatformat:0|intcomma }}원</span>
+                                        {{ product.price|floatformat:0|intcomma }}원
                                     </div>
                                 </div>
                                 <!-- Product actions-->
