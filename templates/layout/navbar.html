@@ -2,7 +2,8 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">Start Bootstrap</a>
+        <!-- dev_8 -->
+        <a class="navbar-brand" href="{% url 'store:home' %}">쇼핑몰</a>
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
@@ -15,10 +16,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#!">Home</a>
+                    <!--dev_8-->
+                    <a class="nav-link active"
+                       aria-current="page"
+                       href="{% url 'store:home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!">About</a>
+                    <!--dev_8-->
+                    <a class="nav-link" href="{% url 'store:about' %}">About</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"

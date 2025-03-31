@@ -1,8 +1,14 @@
 from django.contrib import admin
 from django.urls import include, path
-
 from . import views
 
+
+# dev_8
+# 네임 스페이스?
+app_name="store"
+
+# dev_1
 urlpatterns = [
     path('', views.home, name='home'),
+    path('about', views.about, name='about'), # dev_8 어바웃 페이지 추가
 ]
