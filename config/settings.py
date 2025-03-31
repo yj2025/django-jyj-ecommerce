@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "store",  # dev_1
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -56,7 +57,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"], # dev_1
+        "DIRS": [BASE_DIR / "templates"],  # dev_1
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -105,9 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "ko-kr" # dev_1
+LANGUAGE_CODE = "ko-kr"  # dev_1
 
-TIME_ZONE = "Asia/Seoul" # dev_1
+TIME_ZONE = "Asia/Seoul"  # dev_1
 
 USE_I18N = True
 
