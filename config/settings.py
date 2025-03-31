@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "store",  # dev_1
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -56,7 +57,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"], # dev_1
+        "DIRS": [BASE_DIR / "templates"],  # dev_1
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -105,9 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "ko-kr" # dev_1
+LANGUAGE_CODE = "ko-kr"  # dev_1
 
-TIME_ZONE = "Asia/Seoul" # dev_1
+TIME_ZONE = "Asia/Seoul"  # dev_1
 
 USE_I18N = True
 
@@ -122,6 +123,7 @@ USE_TZ = True
 # URL 상의 스태틱 폴더를, 로컬(내컴퓨터)의 파일 폴더와 매칭시키는 부분
 # http://127.0.0.1:8000/static/
 STATIC_URL = "static/"
+# Django가 정적 파일을 찾을 디렉토리 목록 설정
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
@@ -131,8 +133,10 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# dev_2
-# 미디어 파일 경로 설정  http://127.0.0.1:8000/media/파일경로
+# 미디어 파일 경로 설정
 import os
+
+# dev_2
+# http://127.0.0.1:8000/media/파일경로
 MEDIA_URL = "media/"  # ex) /media/photo1.png
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
