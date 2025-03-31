@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from store.models import Product
+
 # Create your views here.
 
-# dev_1
+# dev_5
 def home(request):
-    context = {'message': 'Hello, Django!'}
-    return render(request, 'store/home.html', context )
-    # return HttpResponse("<h1>이제부터 쇼핑몰을 만들어 봅시다.</h1>")
+    products = Product.objects.all()
+    return render(request, "store/home.html", {"products": products})
