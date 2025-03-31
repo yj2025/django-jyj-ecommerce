@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-0gzzd&b5#)f2**v7dn@^-w&1=6%l1y=iynu3iks+rj)yp!85wu"
+SECRET_KEY = "django-insecure-3l)hl(b%=p2&l7%gk6i5^1i@^cuk+*&sgu__48(8q7x!c%xo$f"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "store",  # dev_1
+    "debug_toolbar",  # dev_1
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",  # dev_1
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -49,6 +51,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+# dev_1
+# 현재 개발 환경의 IP주소를 입력한다.
+# 보통 djnago default local IP 주소는 127.0.0.1 이다
+INTERNAL_IPS = "127.0.0.1"
+
 
 ROOT_URLCONF = "config.urls"
 
@@ -104,36 +112,37 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "ko-kr"  # dev_1
+LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "Asia/Seoul"  # dev_1
 
 USE_I18N = True
 
+# dev_5
+# Timezone 의 사용여부를 정한다.
+# False면 모든 datetime들을 표시하고 True면 template과 form에만 적용된다.
+# 즉 DB에 저장되는 정보도 한국 시간대로 사용하려면 이 부분을 False로 지정해주어야 한다.
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# dev_2
-# 스태틱(static) 디렉터리
-# URL 상의 스택틱 폴더를 ,로컬(내컴퓨터)의 파일 폴더와 매칭 시키는 부분
-# http://127.0.0.1:8000/static/a.jpg
+# dev_1
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# dev_2
 # 미디어 파일 경로 설정
 import os
 
-# dev_2
 # http://127.0.0.1:8000/media/파일경로
 MEDIA_URL = "media/"  # ex) /media/photo1.png
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
