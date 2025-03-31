@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",  # "django.contrib.humanize",  # dev_5 쉼표(,)를 추가하여 통화 형식(₩1,000,000)으로 변환하는 방법
     "store",  # dev_1
+    "accounts" # dev_9
 ]
 
 MIDDLEWARE = [
