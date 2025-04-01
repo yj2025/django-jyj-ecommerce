@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+# from .forms import RegisterUserForm # 상대 경로형식
 from accounts.forms import RegisterUserForm # 절대 경로 형식
 
 # Create your views here.
