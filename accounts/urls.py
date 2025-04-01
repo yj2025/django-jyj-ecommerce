@@ -7,7 +7,12 @@ from accounts import views
 # dev_9
 app_name = "accounts"
 
+# 이름 짓는법 = 변수, 함수, 클래스 이름 
+# login_user
+# 의미_그룹(통일)
+
 urlpatterns = [
     path("login/", views.login_user, name="login_user"),
     path("logout/", views.logout_user, name="logout_user"),
+    path("register/", views.register_user, name="register_user"),
 ]

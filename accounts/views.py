@@ -30,3 +30,23 @@ def login_user(request):
             return redirect("accounts:login_user")
     else:
         return render(request, "accounts/login.html", {})
+
+# dev_10
+def register_user(request):
+
+    form = RegisterUserForm()
+
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "You Have been logged in")
+            return redirect("/")
+        else:
+            messages.success(request, ("There was an error, please try again"))
+            return redirect("accounts:login_user")
+    else:
+        return render(request, "accounts/login.html", {})
