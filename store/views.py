@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from store.models import Product
+
+from store.models import Product, Category
 
 # Create your views here.
 
@@ -17,3 +18,17 @@ def about(request):
 def product(request, product_id):
     product = Product.objects.get(id=product_id)
     return render(request, "store/product.html", {"product":product})
+
+# dev_14
+def category_summary(request):
+    categories = Category.objects.all()
+    return render(request, "store/category_summary.html",{'categories':categories})
+
+# dev_14
+def category(request, category_id):
+
+    category = Category.objects.get(id=category_id)
+    # select * from product, category where category.id = product.id
+    products = Product.objects.filter(category=category)
+    context = {"category":category, "products":products, }
+    return render(request, "store/category.html", context)
