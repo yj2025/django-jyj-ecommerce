@@ -7,7 +7,6 @@ from accounts.forms import RegisterUserForm  # 절대 경로 형식
 
 # Create your views here.
 
-
 # class HTTPRequest:
 #    POST = {"username":"admim","password":"1234"}
 #    GET = {}
@@ -37,22 +36,28 @@ def login_user(request):
         return render(request, "accounts/login.html", {})
 
 
+# dev_10
+# dev_11 회원가입 로직
 def register_user(request):
+
     if request.method == "POST":
+
         if request.POST["password1"] == request.POST["password2"]:
-            form = RegisterUserForm(request.POST)  # 모델에 값 대입
+            form = RegisterUserForm(request.POST)  # 모델에 다가 값을 넣음
 
             if form.is_valid():
-                form.save()  # 회원 DB저장
-            
-                # 회원가입하면 바로 로그인
+                form.save()  # 회원 DB 저장
+
+                # 회원가입 하자 마자, 로그인 시켜줌
                 username = form.cleaned_data.get("username")
                 raw_password = form.cleaned_data.get("password1")
 
                 user = authenticate(username=username, password=raw_password)
                 login(request, user)
-                return redirect("/")
-    else:
-        form = RegisterUserForm()  # 🔹 GET 요청 시 폼 생성
 
-    return render(request, "accounts/register.html", {"form": form})  # 폼을 템플릿에 전달
+                return redirect("/")
+
+    else:
+        form = RegisterUserForm()
+
+    return render(request, "accounts/register.html", {"form": form})
