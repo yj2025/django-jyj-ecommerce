@@ -2,7 +2,7 @@
 {% load humanize %}
 {% block head %}
     {% include "layout/head.html" %}
-{% endblock %}
+{% endblock head %}
 {% block navi %}
     {% include "layout/navbar.html" %}
 {% endblock navi %}
@@ -56,7 +56,9 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
-                                    <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                                    <!-- dev_13 -->
+                                    <a class="btn btn-outline-dark mt-auto"
+                                       href="{% url 'store:product' product.id %}">제품상세</a>
                                 </div>
                             </div>
                         </div>

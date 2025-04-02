@@ -2,12 +2,12 @@ from django.contrib import admin
 from django.urls import include, path
 from . import views
 
-
 # dev_8
 app_name = "store"
 
 # dev_1
 urlpatterns = [
     path("", views.home, name="home"),
-    path("about", views.about, name="about"),  # dev_8 어바웃 페이지 추가
+    path("about", views.about, name="about"),  # dev_8 about page 추가
+    path("product/<int:product_id>", views.product, name="product"),  # dev_13 제품상세
 ]
