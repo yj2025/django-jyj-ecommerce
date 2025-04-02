@@ -1,18 +1,20 @@
 from django.contrib import admin
 from accounts.models import User
 
+
 # Register your models here.
+
 # dev_9
 
-
 # dev_12
+
 # 어드민 페이지 등록방법 3가지
 # 1. 기본적인 관리자 페이지에서 기본적인 등록
 # admin.site.register(User)
 
-
 # 하지만 커스텀 기능 (검색, 필터, 필드 설정 등)을 추가할 수 없음.
 # 2. ModelAdmin 클래스를 활용하는 방법 (커스텀 가능)
+
 @admin.register(User)
 class UserAccountsAdmin(admin.ModelAdmin):
     list_display = [
