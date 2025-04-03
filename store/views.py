@@ -45,7 +45,7 @@ def category(request, category_id):
             "category": category,
             "products": products,
         }
-        return render(request, "store/cotegory.html", context)
+        return render(request, "store/category.html", context)
 
     except:
         messages.success(request, ("카테고리가 존재 하지 않습니다."))
