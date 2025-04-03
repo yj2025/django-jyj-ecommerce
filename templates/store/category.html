@@ -1,9 +1,9 @@
-<!-- dev_14 -->
+<!--dev_14-->
 {% extends "layout/base.html" %}
 {% load humanize %}
 {% block head %}
     {% include "layout/head.html" %}
-{% endblock head %}
+{% endblock %}
 {% block navi %}
     {% include "layout/navbar.html" %}
     <div class="d-flex flex-column vh-100 justify-content-between">
@@ -65,7 +65,7 @@
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center">
-                                        <!-- dev_13 -->
+                                        <!--dev_13-->
                                         <a class="btn btn-outline-dark mt-auto"
                                            href="{% url 'store:product' product.id %}">제품상세</a>
                                     </div>
@@ -78,6 +78,6 @@
         </section>
     {% endblock content %}
     {% block footer %}
-    </div>
-    {% include "layout/footer.html" %}
-{% endblock footer %}
+        {% include "layout/footer.html" %}
+        <div>
+        {% endblock footer %}

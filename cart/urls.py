@@ -5,6 +5,5 @@ from django.conf.urls.static import static
 
 # dev_15
 app_name = "cart"
-urlpatterns = [
 
-]
+urlpatterns = []
