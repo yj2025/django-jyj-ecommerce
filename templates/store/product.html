@@ -67,8 +67,10 @@
                 csrfmiddlewaretoken:'{{ csrf_token }}',
                 action:"post"
             },
-            suceess:function(json){
-                console.log(json)                
+            success:function(json){
+                console.log(json)
+                //dev_16
+                $('#cart_quantity').text(json.qty)                 
             },
             error: function(e){
                 console.log(e)
