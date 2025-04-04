@@ -20,8 +20,9 @@
 {% block content %}
       <div class="container">
             {% if cart %}
+                  {% comment %} item = {"quantity":7,"price":3000.00,"product": <Product : 상품1>, "total_price":21000 } {% endcomment %}
                   {% for item in cart %}
-                        <div class="card mb-3">
+                        <div class="card mt-3">
                               <div class="row g-0">
                                     <div class="col-md-4">
                                           <img src=" {{ item.product.image.url }}"
@@ -38,21 +39,21 @@
                                                       <p class="card-text">{{ item.product.description }}</p>
                                                       {% if item.product.is_sale %}
                                                             {% comment %} <div class="d-flex justify-content-center small text-warning mb-2">
-                                                      <div class="bi-star-fill"></div>
-                                                      <div class="bi-star-fill"></div>
-                                                      <div class="bi-star-fill"></div>
-                                                      <div class="bi-star-fill"></div>
-                                                      <div class="bi-star-fill"></div>
-                                                      </div>
-                                                      <!-- Product price-->
-                                                      <strike>
-                                                      ${{ product.price }}
-                                                      </strike>
-                                                      <br />
-                                                      ID :&nbsp;{{ product.id }}
-                                                      <br />
+                          <div class="bi-star-fill"></div>
+                          <div class="bi-star-fill"></div>
+                          <div class="bi-star-fill"></div>
+                          <div class="bi-star-fill"></div>
+                          <div class="bi-star-fill"></div>
+                        </div>
+                        <!-- Product price-->
+                        <strike>
+                          ${{ product.price }}
+                        </strike>
+                        <br />
+                        ID :&nbsp;{{ product.id }}
+                        <br />
                                                             &nbsp;${{ product.sale_price }} {% endcomment %}
-                                                            ${{ item.product.price }}
+                                                            ${{ item.product.sale_price }}
                                                             <br />
                                                             ID :
                                                             {{ item.product.id }}
@@ -94,3 +95,27 @@
 {% block footer %}
       {% include "layout/footer.html" %}
 {% endblock footer %}
+{% block script %}
+      $(document).on('click','#add-cart',function(e){
+      $.ajax({
+      type:"post",
+      url:"{% url 'cart:add_cart' %}",
+      data:{
+      product_id:$("#add-cart").val(),
+      product_qty: $("#inputQuantity").val(),
+      csrfmiddlewaretoken:'{{ csrf_token }}',
+      action:"post"
+      },
+      success:function(json){
+      console.log(json)
+      // dev_16
+      // $('#cart_quantity').text(json.qty)
+      // dev_17
+      location.reload();
+      },
+      error: function(e){
+      console.log(e)
+      }
+      });
+      });
+{% endblock script %}
