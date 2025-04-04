@@ -69,8 +69,9 @@
                 <button class="btn btn-outline-dark" type="submit">
                     <i class="bi-cart-fill me-1"></i>
                     Cart
-                    <!--dev_16-->
-                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity"></span>
+                    <!-- dev_16 -->
+                    <!-- dev_17 cart 함수 호출 -->
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
                 </button>
             </form>
         </div>

@@ -40,7 +40,11 @@ class Cart:  # 카트 클래스 생성
             self.cart[product_id]["quantity"] += quantity
 
         self.save()
-
+#     self.sesstion =request.sesssion = { 'cart':' {}(self.cart)  }
+#     self.cart = {
+#                       "1",{"quantity": 1, "price": "10000.00"}
+#                      "2":{"quantity":1,"price":"5000.00"}
+#                  }
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True  # 해당 세션을 DB에 저장
