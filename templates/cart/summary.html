@@ -95,29 +95,26 @@
 {% block footer %}
       {% include "layout/footer.html" %}
 {% endblock footer %}
+<!--dev_19-->
 {% block script %}
       <script>
-      $(document).on('click','#add-cart',function(e){
-          $.ajax({
-              type:"post",
-              url:"{% url 'cart:add_cart' %}",
-              data:{
-                  product_id:$("#add-cart").val(),
-                  product_qty: $("#inputQuantity").val(),
-                  csrfmiddlewaretoken:'{{ csrf_token }}',
-                  action:"post"
-              },
-              success:function(json){
-                  console.log(json)
-                  // dev_16
-                  // $('#cart_quantity').text(json.qty)                 
-                  // dev_17
-                  location.reload();
-              },
-              error: function(e){
-                  console.log(e)
-              }
-          });
+      $(document).on('click','.delete-product',function(e){
+            $.ajax({
+                  type:"post",
+                  url:"{% url 'cart:delete_cart' %}" + "/" + $(this).data("index"),
+                  data:{
+                        product_id: $(this).data("index")
+                        csrfmiddlewaretoken:'{{ csrf_token }}',
+                        action:"post"
+                  },
+                  success:function(json){
+                        console.log(json)
+                        location.reload();                 
+                  },
+                  error: function(e){
+                        console.log(e)
+                  }
+            });
       });
       </script>
 {% endblock script %}
