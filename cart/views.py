@@ -37,3 +37,11 @@ def add_cart(request):
         cart.decrypt_all_sessions()
 
         return response
+    
+# dev_18
+def summary_cart(request):
+
+    # 카트 객체 받아오기
+    cart = Cart(request)
+
+    return render(request, "cart/summary.html", {"cart":cart})

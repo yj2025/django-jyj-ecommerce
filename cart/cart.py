@@ -1,6 +1,10 @@
 from django.conf import settings
 from django.contrib.sessions.models import Session
 from django.contrib.sessions.backends.db import SessionStore
+from decimal import Decimal
+
+# dev_18
+from store.models import Product
 
 
 # dev_15
@@ -23,6 +27,27 @@ class Cart:  # 카트 클래스 생성
     def __len__(self):
         return sum(item["quantity"] for item in self.cart.values())
 
+
+    def __iter__(self):
+        product_ids = self.cart.keys() # ("1":, "2")
+
+
+        # select * from product where id in ("1", "2")
+        products = Product.objects.filter(id__in=product_ids)
+
+        # self.cart = {
+        #       "1",{"quantity": 1, "price": "10000.00", "prodcut": <Product: 상품1> },
+        #       "2",{"quantity": 1, "price": "5000.00", "prodcut": <Product: 상품2> },
+        #       }
+        for product in products:
+            self.cart[str(product.id)]["product"] = product
+
+        for item in self.cart.values():
+            item["price"] = Decimal(item["price"])
+            item["total_price"] = item["price"] * item["quantity"]
+            
+            yield item # 제네레이터 문법
+
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)
 
@@ -30,7 +55,6 @@ class Cart:  # 카트 클래스 생성
         #          "1":{"quantity":7,"price":"3000.00"}
         #          "2":{"quantity":1,"price":"5000.00"}
         #        }
-
         if product_id not in self.cart:
             self.cart[product_id] = {"quantity": 0, "price": str(product.price)}
 
