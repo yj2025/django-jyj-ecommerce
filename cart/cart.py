@@ -45,7 +45,7 @@ class Cart:  # 카트 클래스 생성
             item["price"] = Decimal(item["price"])
             item["total_price"] = item["price"] * item["quantity"]
 
-            yield  item  # 제너레이터 문법 return
+            yield item  # 제너레이터 문법 return
 
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)
@@ -56,6 +56,10 @@ class Cart:  # 카트 클래스 생성
         #        }
 
         if product_id not in self.cart:
+            # dev_21
+            if product.is_sale:
+                self.cart[product_id] = {"quantity": 0, "price": str(product.sale_price)}    
+
             self.cart[product_id] = {"quantity": 0, "price": str(product.price)}
 
         if is_update:
@@ -74,13 +78,13 @@ class Cart:  # 카트 클래스 생성
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True  # 해당 세션을 DB에 저장
 
+    # dev_19
     def remove(self, product):
         product_id = str(product.id)
 
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
-            
 
     def decrypt_all_sessions(self):
         """현재 DB에 저장된 모든 세션을 복호화하여 출력"""
