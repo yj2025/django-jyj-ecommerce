@@ -2,7 +2,8 @@
 {% extends "layout/base.html" %}
 {% load humanize %}
 {% block head %}
-    {% include "layout/head.html" %}
+    <!-- dev_26 -->
+    {% include "orders/head.html" %}
 {% endblock head %}
 {% block navi %}
     {% include "layout/navbar.html" %}
@@ -298,18 +299,33 @@
                                 </div>
                             </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                                <input type="submit"
-                                       class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary"
-                                       value="Place Order">
-                            </input>
+                                <!-- dev_26 -->
+                                {% comment %} <input type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" value="Place Order">
+                                </input> {% endcomment %}
+                                <button type="button"
+                                        id="cardPay"
+                                        data-pg="html5_inicis.INIpayTest"
+                                        data-pay="card"
+                                        class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary request-pay"
+                                        value="Place Order">Place Order</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
+    {% endblock content %}
+    {% block footer %}
+        {% include "layout/footer.html" %}
     </div>
-{% endblock content %}
-{% block footer %}
-    {% include "layout/footer.html" %}
-</div>
 {% endblock footer %}
+{% block script %}
+    <script>
+        $(document).on('click','.request-pay',function(e){
+
+            let pg = $(this).data('pg')
+            let payMethod = $('this').data('pay')
+            let pricteTotals = {{cart.get_product_total}} // cart에 있는 함수 호출
+        });
+    </script>
+{% endblock %}
