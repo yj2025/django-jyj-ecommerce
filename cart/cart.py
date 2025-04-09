@@ -6,6 +6,9 @@ from decimal import Decimal
 # dev_18
 from store.models import Product
 
+# dev_23
+from accounts.models import User
+
 
 # dev_15
 class Cart:  # 카트 클래스 생성
@@ -14,6 +17,11 @@ class Cart:  # 카트 클래스 생성
     def __init__(self, request):  # 객체 생성시 request 객체를 받도록 함
 
         self.session = request.session  # session 객체를 Cart 객체에 변수로 저장
+
+        # dev_23
+        # 로그인이 되어 있다면, 로그인 유저에 대한 정보를 빼내기 위하여...
+        self.request = request
+
         cart = self.session.get(settings.CART_SESSION_ID)
 
         if not cart:
@@ -78,6 +86,18 @@ class Cart:  # 카트 클래스 생성
 
         self.save()
 
+    # dev_23
+    def cart_to_db(self):
+
+        if self.request.user.is_authenticated:  # 로그인이 되어 있는 유저라면
+            current_user = User.objects.filter(id=self.request.user.id)
+            # Convert {'3':1} to {"3":1}
+            carty = str(self.cart)
+            carty = carty.replace("'", '"')
+            current_user.update(
+                old_cart=str(carty)
+            )  # ord_cart 에 장바구니 str 형태로 저장
+
     #     self.sesstion =request.sesssion = { 'cart':' {}(self.cart)  }
     #     self.cart = {
     #                       "1",{"quantity": 1, "price": "10000.00"}
@@ -86,6 +106,8 @@ class Cart:  # 카트 클래스 생성
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True  # 해당 세션을 DB에 저장
+        # dev_23
+        self.cart_to_db()
 
     # dev_19
     def remove(self, product):
