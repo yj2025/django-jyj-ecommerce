@@ -8,5 +8,5 @@ from orders.models import Order
 class Payment(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     imp_uid = models.CharField(max_length=100)
-    created_at = models.CharField(auto_now_add=True)
-    updated_at = models.CharField(auto_now=True)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
