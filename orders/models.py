@@ -27,3 +27,18 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+
+# dev_25
+class ShippingAddress(models.Model):
+    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=125)
+    phone = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    address1 = models.CharField(max_length=255)
+    address2 = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=255, null=True, blank=True)
+    zipcode = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
