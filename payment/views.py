@@ -48,7 +48,7 @@ def payment_process(request):
 
                 create_order_item.save()
 
-            # 결재 정보 저장
+            # 결제 정보 저장
             create_payment = Payment(order=create_order)
             create_payment.imp_uid = request.POST["imp_uid"]
             create_payment.save()
