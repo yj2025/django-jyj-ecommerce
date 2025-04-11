@@ -166,6 +166,19 @@ AUTH_USER_MODEL = "accounts.User"
 # dev_15
 CART_SESSION_ID = "cart"
 
+# dev_27
+# 위에서 추가되어 있으므로
+# AUTH_USER_MODEL = "accounts.User"
+# 추가!! 없으면 오류 발생 "앱이름.모델명" user모델생성 후 allauth말고 내가 생성한 모델을 우선으로 적용
+SITE_ID = 1  # 추가
+
+AUTHENTICATION_BACKENDS = [
+    # 추가 장고에서 사용자의 이름을 기준으로 로그인하도록 설정
+    "django.contrib.auth.backends.ModelBackend",
+    # 추가 'allauth'의 인증방식 추가
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
 # dev_27 소셜로그인 설정
 # 소셜 로그인 시 GET 요청만으로 로그인 처리를 허용
 # 사용자가 로그인 버튼을 클릭했을 때 redirect URI로 오는 GET 요청만으로도 자동 로그인
