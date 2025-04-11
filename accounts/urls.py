@@ -9,11 +9,12 @@ app_name = "accounts"
 
 # 이름 짓는법 = 변수, 함수 , 클래스 이름
 # login_user
-# login_user
 # 의미_그룹(통일)
 
 urlpatterns = [
     path("login/", views.login_user, name="login_user"),
     path("logout/", views.logout_user, name="logout_user"),
     path("register/", views.register_user, name="register_user"), #dev_10
+    path("register/", views.register_user, name="register_user"), #dev_10
+    path("kakao_login_user/", views.kakao_login_user, name="kakao_login_user"), # dev_27
 ]
