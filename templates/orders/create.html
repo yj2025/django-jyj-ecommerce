@@ -347,7 +347,7 @@
             let impCode = 'imp43216235' //상점번호
             
             IMP.init(impCode); //고객사 식별코드를 통해 결재 모듈 초기화
-            IMP.request_pay(  //결재모듈 팝업 띄워줌
+            IMP.request_pay(  //결재모듈 팝업(화면) 띄워줌
             {   
                 pg:pg,
                 pay_method: payMethod,
@@ -372,8 +372,9 @@
                     $("#imp_uid").val(response.imp_uid);
                     $("#paid_amount").val(response.paid_amount);
                     //폼전송 <form id="payment-form"
-                    $("#payment-form").submit()
-                                      
+                    $("#payment-form").submit()             
+
+
                 }else{
                     alert("결재실패")
                 }
