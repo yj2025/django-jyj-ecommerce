@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.kakao",  # 카카오로그인 구현시 추가
     #'allauth.socialaccount.providers.naver', # 네이버 로그인 구현시 추가
     # dev_28
-    "rest_framework",
+    "rest_framework", # drf
     "api"
 ]
 
