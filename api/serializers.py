@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from store.models import Category
+from store.models import Category, Product
 
 # 2. Serilaizer 객체의 주요 기능
 # serialization
@@ -10,14 +10,19 @@ from store.models import Category
 
 
 # dev_29
-class ProductSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=100)
-    price = serializers.ImageField()
-    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
-    description = serializers.CharField(
-        max_length=250, required=False, allow_blank=True, allow_null=True
-    )
-    image = serializers.ImageField()
-    is_sale = serializers.BooleanField()
-    sale_price = serializers.IntegerField()
+# class ProductSerializer(serializers.Serializer):
+#     id = serializers.IntegerField()
+#     name = serializers.CharField(max_length=100)
+#     price = serializers.ImageField()
+#     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
+#     description = serializers.CharField(
+#         max_length=250, required=False, allow_blank=True, allow_null=True
+#     )
+#     image = serializers.ImageField()
+#     is_sale = serializers.BooleanField()
+#     sale_price = serializers.IntegerField()
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = "__all__"
