@@ -22,7 +22,9 @@ from store.models import Category, Product
 #     is_sale = serializers.BooleanField()
 #     sale_price = serializers.IntegerField()
 
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = "__all__"
+        # fields = "__all__"
+        fields = ["id", "name", "category"]

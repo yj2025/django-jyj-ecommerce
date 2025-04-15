@@ -4,6 +4,11 @@ from store.models import Product
 from api.serializers import ProductSerializer
 
 
+# http://127.0.0.1:8000/api/products/
+# 방식   url         기능
+# GET  products/    list
+
+
 # dev_29
 @api_view(["GET"])
 def products_api(request):
@@ -13,4 +18,5 @@ def products_api(request):
         # many=True ➜ 여러 개의 인스턴스 (QuerySet, 리스트 등)
         # many=False (기본값) ➜ 단일 인스턴스
         serializer = ProductSerializer(products, many=True)
+        print(serializer.data)
         return Response(serializer.data)
