@@ -7,10 +7,10 @@ from api.serializers import ProductSerializer
 # http://127.0.0.1:8000/api/products/
 # 방식   url         기능
 # GET  products/    list
-
+# POST products/    create
 
 # dev_29
-@api_view(["GET"])
+@api_view(["GET","POST"])
 def products_api(request):
 
     if request.method == "GET":
@@ -19,4 +19,11 @@ def products_api(request):
         # many=False (기본값) ➜ 단일 인스턴스
         serializer = ProductSerializer(products, many=True)
         print(serializer.data)
+        return Response(serializer.data)
+
+    # 디시리얼라이져
+    if request.method == "POST":
+        serializer = ProductSerializer(request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save
         return Response(serializer.data)
