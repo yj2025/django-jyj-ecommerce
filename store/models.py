@@ -3,6 +3,11 @@ from django.db import models
 
 # Create your models here.
 # dev_3
+
+# select * from category, product where Category.id = product.id
+# Category.product_set.all()
+
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
 

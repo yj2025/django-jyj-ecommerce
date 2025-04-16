@@ -5,7 +5,7 @@ from store.models import Category, Product
 # 1) serialization
 # 2) deserialiaztion
 # 3) validation
-# 4) request / response 데이터 핸들링 ( to_internal_value() / to_representation() )
+# 4) create(), update()     request / response 데이터 핸들링 ( to_internal_value() / to_representation() )
 # 5) nested serialization
 
 
