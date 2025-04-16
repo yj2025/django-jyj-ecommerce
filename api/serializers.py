@@ -53,7 +53,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
         return value
     
-def validate(self, data):
+    # 검증
+    # https://www.django-rest-framework.org/api-guide/serializers/#validation
+    def validate(self, data):
         is_sale = data.get("is_sale")
         sale_price = data.get("sale_price") 
 
@@ -67,4 +69,4 @@ def validate(self, data):
             if sale_price and sale_price > 0:
                  raise serializers.ValidationError({"sale_price": "is_sale이 false 이면 sale_price를 지정 할수 없습니다."})
 
-        return data
+        return data 
