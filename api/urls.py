@@ -19,7 +19,8 @@ urlpatterns = [
     # GET       products/        list
     # POST      products/        create
     # GET       products/{id}    product
-    # DELETE    products/{id}  delete product
+    # PUT       products/{id}    modify product
+    # DELETE    products/{id}    delete product
     path("products/", product_views.products_api),
     path("product/<int:pk>/", product_views.product_api),
 ]
