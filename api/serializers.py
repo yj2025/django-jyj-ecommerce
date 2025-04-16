@@ -22,7 +22,8 @@ from store.models import Category, Product
 #     is_sale = serializers.BooleanField()
 #     sale_price = serializers.IntegerField()
 
-
+# 객체를 => 딕셔너리로 만드는게 목적
+#
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product

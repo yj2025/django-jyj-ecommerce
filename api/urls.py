@@ -15,12 +15,12 @@ urlpatterns = [
     path("hello-world-drf/", base_views.hello_world_drf),
     # dev_29 proudct_view.py
     # http://127.0.0.1:8000/api/products/
-    # 방식          url          기능
-    # GET       products/        list
-    # POST      products/        create
-    # GET       products/{id}    product
-    # PUT       products/{id}    modify product
-    # DELETE    products/{id}    delete product
+    # 방식   url                 기능
+    # GET  products/            list
+    # POST products/            create
+    # Get  product/{id}         product
+    # PUT  product/{id}       modify product
+    # DELETE  product/{id}    delete product
     path("products/", product_views.products_api),
     path("product/<int:pk>/", product_views.product_api),
 ]
