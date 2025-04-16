@@ -49,3 +49,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
+
+    def create(self, validated_data):
+        category_data = validated_data.pop("category")
+        category, _ = Category.objects.get_or_create(**category_data)
