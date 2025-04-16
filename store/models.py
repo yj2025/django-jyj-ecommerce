@@ -16,7 +16,10 @@ class Product(models.Model):
     description = models.CharField(max_length=250, default="", blank=True, null=True)
     # dev_30 => josn 처리를 위하여  blank=True, null=True
     image = models.ImageField(upload_to="upload/product", blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    # dev_32 역방향 참조를 위한 related_name="products"
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="products"
+    )
     # dev_6
     is_sale = models.BooleanField(default=False)
     sale_price = models.IntegerField(default=0)

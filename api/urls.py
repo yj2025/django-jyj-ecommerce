@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 # dev_28
 # from api.views import hello_world, hello_world_json, hello_world_drf
-from .views import base_views, product_views
+from .views import base_views, product_views, category_views
 
 app_name = "api"
 urlpatterns = [
@@ -23,4 +23,8 @@ urlpatterns = [
     # DELETE  product/{id}    delete product
     path("products/", product_views.products_api),
     path("product/<int:pk>/", product_views.product_api),
+    # dev_32
+    # 방식   url                  기능
+    # GET  categories/            list
+    path("categories/", category_views.categories_api),
 ]
