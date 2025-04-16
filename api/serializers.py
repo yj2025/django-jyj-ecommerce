@@ -53,4 +53,18 @@ class ProductSerializer(serializers.ModelSerializer):
 
         return value
     
-    
+def validate(self, data):
+        is_sale = data.get("is_sale")
+        sale_price = data.get("sale_price") 
+
+        if is_sale:
+             # 세일 중이면 sale_price는 반드시 필요하고 0보다 커야 함
+            if sale_price is None or sale_price <=0 :
+                raise serializers.ValidationError({"sale_price": "sale_price는 0보다 커야 합니다."})
+
+        else:
+            # 세일이 아니면 sale_price는 아예 없어야 함 (자동 무시하거나 경고)
+            if sale_price and sale_price > 0:
+                 raise serializers.ValidationError({"sale_price": "is_sale이 false 이면 sale_price를 지정 할수 없습니다."})
+
+        return data
