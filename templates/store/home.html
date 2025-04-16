@@ -2,7 +2,7 @@
 {% load humanize %}
 {% block head %}
     {% include "layout/head.html" %}
-{% endblock head %}
+{% endblock %}
 {% block navi %}
     {% include "layout/navbar.html" %}
 {% endblock navi %}
@@ -26,11 +26,20 @@
                                             right: 0.5rem">Sale</div>
                             {% endif %}
                             <!-- Product image-->
-                            <img class="card-img-top"
-                                 style="height:15rem;
-                                        object-fit:cover"
-                                 src="{{ product.image.url }}"
-                                 alt="..." />
+                            {% if product.image %}
+                                <img class="card-img-top"
+                                     style="height:15rem;
+                                            object-fit:cover"
+                                     src="{{ product.image.url }}"
+                                     alt="..." />
+                            {% else %}
+                                <div class="card-img-top"
+                                     style="height:15rem;
+                                            background:#eee;
+                                            display:flex;
+                                            align-items:center;
+                                            justify-content:center">이미지 없음</div>
+                            {% endif %}
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
@@ -56,7 +65,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
-                                    <!-- dev_13 -->
+                                    <!--dev_13-->
                                     <a class="btn btn-outline-dark mt-auto"
                                        href="{% url 'store:product' product.id %}">제품상세</a>
                                 </div>
