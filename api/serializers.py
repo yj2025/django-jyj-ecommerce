@@ -1,12 +1,25 @@
 from rest_framework import serializers
 from store.models import Category, Product
 
-# 2. Serilaizer 객체의 주요 기능
-# 1) serialization
-# 2) deserialiaztion
-# 3) validation
-# 4) create(), update()     request / response 데이터 핸들링 ( to_internal_value() / to_representation() )
-# 5) nested serialization
+# **Serilaizer 객체의 주요 기능
+# ✔️ 1) Serialization
+# → Python 객체 (ex. 모델 인스턴스)를 JSON 같은 포맷으로 변환
+# → 내부적으로 to_representation() 사용
+
+# ✔️ 2) Deserialization
+# → JSON 같은 입력 데이터를 Python 객체로 변환
+# → 내부적으로 to_internal_value() 사용
+
+# ✔️ 3) Validation
+# → .is_valid() 호출 시 필드 검증 수행
+# → validate_<field>(), validate() 메서드로 커스텀 검증 가능
+
+# ✔️ 4) create(), update()     request / response 데이터 핸들링 ( to_internal_value() / to_representation() )
+
+# ✔️ 5) Nested Serialization
+# → 관계 모델을 중첩 구조로 표현
+# → 예: ForeignKey, ManyToMany 필드를 다른 시리얼라이저로 감싸 표현
+
 
 
 # dev_29
@@ -25,9 +38,7 @@ from store.models import Category, Product
 
 # dev_32
 
-
-# 객체를 => 딕셔너리로 만드는게 목적
-#
+# 객체 => 딕셔너리로 만드는게 목적
 class ProductSerializer(serializers.ModelSerializer):
     # category = CategorySerializer(read_only=True)
 
@@ -44,7 +55,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     # dev_32 역방향 참조
-    products = ProductSerializer(many=True, read_only=True)  # related_name=products
+    products = ProductSerializer(many=True, read_only=True)  # related_name=products # 여기서 중첩
 
     class Meta:
         model = Category
