@@ -1,46 +1,38 @@
 from rest_framework import serializers
 from store.models import Category, Product
 
-# **Serilaizer 객체의 주요 기능
-# ✔️ 1) Serialization
-# → Python 객체 (ex. 모델 인스턴스)를 JSON 같은 포맷으로 변환
-# → 내부적으로 to_representation() 사용
+# 2. Serilaizer 객체의 주요 기능
+# 1) serialization
+# 2) deserialiaztion
+# 3) validation
+# 4) create(), update()     request / response 데이터 핸들링 ( to_internal_value() / to_representation() )
+# 5) nested serialization
 
-# ✔️ 2) Deserialization
-# → JSON 같은 입력 데이터를 Python 객체로 변환
-# → 내부적으로 to_internal_value() 사용
-
-# ✔️ 3) Validation
-# → .is_valid() 호출 시 필드 검증 수행
-# → validate_<field>(), validate() 메서드로 커스텀 검증 가능
-
-# ✔️ 4) create(), update()     request / response 데이터 핸들링 ( to_internal_value() / to_representation() )
-
-# ✔️ 5) Nested Serialization
-# → 관계 모델을 중첩 구조로 표현
-# → 예: ForeignKey, ManyToMany 필드를 다른 시리얼라이저로 감싸 표현
+# dev_33
+# ✅ 주의할 점
+# depth는 읽기 전용 출력.
+# POST, PUT 요청에서 중첩된 객체를 직접 생성하거나 수정 불가
+# 만약 쓰기도 원한다면 category_id 같은 별도 필드와 create() 오버라이드가 여전히 필요해요.
 
 
-
-# dev_29
-# class ProductSerializer(serializers.Serializer):
-#     id = serializers.IntegerField()
-#     name = serializers.CharField(max_length=100)
-#     price = serializers.ImageField()
-#     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
-#     description = serializers.CharField(
-#         max_length=250, required=False, allow_blank=True, allow_null=True
-#     )
-#     image = serializers.ImageField()
-#     is_sale = serializers.BooleanField()
-#     sale_price = serializers.IntegerField()
+# 객체를 => 딕셔너리로 만드는게 목적
 
 
-# dev_32
+# 순환 참조 방지
+class CategorySerializer(serializers.ModelSerializer):
+    # dev_32 역방향 참조
+    # products = ProductSerializer(many=True, read_only=True)  # related_name=products
 
-# 객체 => 딕셔너리로 만드는게 목적
+    class Meta:
+        model = Category
+        fields = "__all__"
+
+
+# dev_33
+
+
 class ProductSerializer(serializers.ModelSerializer):
-    # category = CategorySerializer(read_only=True)
+    category = CategorySerializer(read_only=True)  # dev_33 write 을 할려면
 
     class Meta:
         model = Product
@@ -52,15 +44,24 @@ class ProductSerializer(serializers.ModelSerializer):
         # 기본적으로 read_only 임
         # depth = 1
 
+    #     {
+    # "category": {
+    # #         "name": "과일"
+    # #     },
+    #     "name": "오렌지",
+    #     "price": "12000.00",
+    #     "description": "파이썬 책입니다.",
+    #     "image": null,
+    #     "is_sale": false,
+    #     "sale_price": 0
+    # }
+    #
 
-class CategorySerializer(serializers.ModelSerializer):
-    # dev_32 역방향 참조
-    products = ProductSerializer(many=True, read_only=True)  # related_name=products # 여기서 중첩
+    # def create(self, validated_data):
+    #     category_data = validated_data.pop("category")
 
-    class Meta:
-        model = Category
-        fields = "__all__"
+    #     # 카테고리 저장/조회
+    #     category, _ = Category.objects.get_or_create(**category_data)
+    #     product = Product.objects.create(**validated_data, category=category)
 
-    def create(self, validated_data):
-        category_data = validated_data.pop("category")
-        category, _ = Category.objects.get_or_create(**category_data)
+    #     return product
