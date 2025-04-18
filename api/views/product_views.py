@@ -51,7 +51,7 @@ def products_api(request):
 
         # 카테고리 저장 조회
         category, _ = Category.objects.get_or_create(**category_data)
-
+        
         serializer = ProductSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save(category=category)
