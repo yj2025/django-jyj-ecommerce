@@ -2,6 +2,7 @@ from rest_framework import serializers
 from store.models import Category, Product
 
 
+
 # dev_34
 # nested 전용 시리얼 라이져
 class ProductSimpleSerializer(serializers.ModelSerializer):
@@ -9,11 +10,9 @@ class ProductSimpleSerializer(serializers.ModelSerializer):
         model = Product
         fields = "__all__"
 
-
 class ProductSerializer(serializers.ModelSerializer):
     # dev_34 순환참조 방지(lazy loading)
     from api.serializers.category_serializers import CategorySimpleSerializer
-
     category = CategorySimpleSerializer()
 
     class Meta:

@@ -2,6 +2,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from store.models import Category
 
+from django.shortcuts import get_object_or_404
+from rest_framework import status
+
 # dev_32
 from api.serializers.category_serializers import (
     CategorySerializer,
@@ -17,7 +20,7 @@ from rest_framework.views import APIView
 
 
 # dev_32
-@api_view(["GET"]) 
+@api_view(["GET"])
 def categories_api(request):
 
     if request.method == "GET":
@@ -27,6 +30,7 @@ def categories_api(request):
 
 
 # dev_35
+
 
 class CategoriesAPI(APIView):
     def get(self, request):
@@ -45,3 +49,23 @@ class CategoriesAPI(APIView):
 
     def delete(self, request):
         pass
+
+
+class CategoryAPI(APIView):
+
+    def get(self, request, pk):
+        category = get_object_or_404(Category, id=pk)
+        serializer = CategorySimpleSerializer(category)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        category = get_object_or_404(Category, id=pk)
+        serializer = CategorySimpleSerializer(category, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        category = get_object_or_404(Category, id=pk)
+        category.delete()
+        return Response("삭제 성공", status=status.HTTP_204_NO_CONTENT)

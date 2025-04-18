@@ -10,9 +10,9 @@ from .views import base_views, product_views, category_views
 
 app_name = "api"
 urlpatterns = [
-    path("hello-world/", base_views.hello_world),
-    path("hello-world-json/", base_views.hello_world_json),
-    path("hello-world-drf/", base_views.hello_world_drf),
+    # path("hello-world/", base_views.hello_world),
+    # path("hello-world-json/", base_views.hello_world_json),
+    # path("hello-world-drf/", base_views.hello_world_drf),
     # dev_29 proudct_view.py
     # http://127.0.0.1:8000/api/products/
     # 방식   url                 기능
@@ -24,7 +24,14 @@ urlpatterns = [
     path("products/", product_views.products_api),
     path("product/<int:pk>/", product_views.product_api),
     # dev_32
+    # path("categories/", category_views.categories_api),
+    # dev_35
     # 방식   url                  기능
-    # GET  categories/            list
-    path("categories/", category_views.categories_api),
+    # GET  categories/           list
+    # POST categories/           create
+    # Get  category/{id}       category
+    # PUT  category/{id}       modify category
+    # DELETE  category/{id}    delete category
+    path("categories/", category_views.CategoriesAPI.as_view()),
+    path("category/<int:pk>/", category_views.CategoryAPI.as_view()),
 ]
