@@ -25,3 +25,5 @@ class ObjectAPITest(TestCase):
             r = pickle.load(f)
 
         print(r.width,r.height)
+
+
