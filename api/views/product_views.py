@@ -1,8 +1,9 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from store.models import Product, Category
-from api.serializers import ProductSerializer
 
+# dev_34
+from api.serializers.product_serializers import ProductSerializer
 
 # http://127.0.0.1:8000/api/products/
 # 방식   url         기능
@@ -51,7 +52,7 @@ def products_api(request):
 
         # 카테고리 저장 조회
         category, _ = Category.objects.get_or_create(**category_data)
-        
+
         serializer = ProductSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save(category=category)
