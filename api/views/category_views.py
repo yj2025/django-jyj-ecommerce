@@ -77,7 +77,13 @@ class CategoryAPI(APIView):
 # 주의
 # 기본적으로는 queryset, serializer_classs는 약속된 이름
 # 대신 커스텀 마이징은 가능
-from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin
+from rest_framework.mixins import (
+    ListModelMixin,
+    CreateModelMixin,
+    RetrieveModelMixin,
+    DestroyModelMixin,
+    UpdateModelMixin,
+)
 from rest_framework.generics import GenericAPIView
 
 
@@ -92,9 +98,20 @@ class CategoriesMixins(ListModelMixin, CreateModelMixin, GenericAPIView):
         return self.create(request, *args, **kwargs)
 
 
-class CategoryMixins(RetrieveModelMixin, GenericAPIView):
+class CategoryMixins(
+    UpdateModelMixin, DestroyModelMixin, RetrieveModelMixin, GenericAPIView
+):
     queryset = Category.objects.all()
     serializer_class = CategorySimpleSerializer
+    lookup_field = "name"
 
     def get(self, request, *args, **kwargs):
+        print("args:", args)
+        print("kwargs:", kwargs)
         return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
