@@ -84,7 +84,7 @@ from rest_framework.mixins import (
     DestroyModelMixin,
     UpdateModelMixin,
 )
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView
 
 
 class CategoriesMixins(ListModelMixin, CreateModelMixin, GenericAPIView):
@@ -115,3 +115,41 @@ class CategoryMixins(
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+    
+# dev_37
+from rest_framework.generics import ListCreateAPIView
+
+# generics.CreateAPIView : 생성
+# generics.ListAPIView : 목록
+# generics.RetrieveAPIView : 조회
+# generics.DestroyAPIView : 삭제
+# generics.UpdateAPIView : 수정
+# generics.RetrieveUpdateAPIView : 조회/수정
+# generics.RetrieveDestroyAPIView : 조회/삭제
+# generics.ListCreateAPIView : 목록/생성
+# generics.RetrieveUpdateDestroyAPIView : 조회/수정/삭제
+
+class CategoriesGeneric(ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    # permission_classes = [IsAuthenticated]
+
+    # create 함수를 오버라이딩
+    def create(self, request, args, **kwargs):
+        name = request.data.get("name")
+
+        # 같은 이름의 카테고리가 이미 존재할 경우 오류 메세지
+        if Category.objects.filter(name=name).exists():
+            raise ValidationError({"message": "같은 이름의 카테고리가 있습니다."})
+
+        response = super().create(request,args, **kwargs)
+        response.data = {
+            "message": "카테고리가 성공적으로 생성 되었습니다.",
+            "category": response.data,
+        }
+
+        return response
+    
+class CategoriesGeneric(RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySimpleSerializer
