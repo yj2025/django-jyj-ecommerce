@@ -15,6 +15,14 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register("categories", category_views.CategoryViewSet)
 
+category_list = category_views.CategoryViewSet.as_view(
+    {"get": "list", "post": "create"}
+)
+
+category_detail = category_views.CategoryViewSet.as_view(
+    {"get": "retrieve", "put": "update",'patch': 'partial_update', 'delete': 'destroy'}
+)
+
 urlpatterns = [
     # path("hello-world/", base_views.hello_world),
     # path("hello-world-json/", base_views.hello_world_json),
@@ -51,3 +59,5 @@ urlpatterns = [
     # dev_38
     path("", include(router.urls)),
 ]
+# http://127.0.0.1:8000/api/categories/
+# http://127.0.0.1:8000/api/categories/1/
