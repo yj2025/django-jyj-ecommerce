@@ -145,7 +145,7 @@ from rest_framework.exceptions import ValidationError
 
 
 # 같은 이름의 카테고리가 이미 존재할 경우 오류
-class CategoriesGeneric(ListCreateAPIView):
+class CategoriesGenericView (ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     # permission_classes = [IsAuthenticated]
@@ -172,7 +172,7 @@ class CategoriesGeneric(ListCreateAPIView):
 # DELETE  category/{id}    delete category
 
 
-class CategoryGeneric(RetrieveUpdateDestroyAPIView):
+class CategoriesGenericView(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySimpleSerializer
 
@@ -189,7 +189,7 @@ class CategoryGeneric(RetrieveUpdateDestroyAPIView):
         print(f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}")
         respose = super().update(request, *args, **kwargs)  # update 쿼리 날아감
         respose.data = {
-            "message": f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}",
+            "message": f"수정 카테고리 이름 {instance.name} -> {request.data.get('name')}",
             "category": respose.data,
         }
 
@@ -231,3 +231,10 @@ class CategoryGeneric(RetrieveUpdateDestroyAPIView):
             {"message": "카테고리가 삭제 되었습니다."},
             status=status.HTTP_204_NO_CONTENT,
         )
+    
+
+from rest_framework.viewsets import ModelViewSet
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySimpleSerializer

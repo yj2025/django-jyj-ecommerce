@@ -9,6 +9,12 @@ from django.conf.urls.static import static
 from .views import base_views, product_views, category_views
 
 app_name = "api"
+
+# dev_38
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register("categories", category_views.CategoryViewSet)
+
 urlpatterns = [
     # path("hello-world/", base_views.hello_world),
     # path("hello-world-json/", base_views.hello_world_json),
@@ -37,7 +43,11 @@ urlpatterns = [
     # dev_36
     # path("categories/", category_views.CategoriesMixins.as_view()),
     # path("category/<str:name>/", category_views.CategoryMixins.as_view()),
+    
     # dev_37
-    path("categories/", category_views.CategoriesGeneric.as_view()),
-    path("category/<int:pk>/", category_views.CategoryGeneric.as_view()),
+    # path("categories/", category_views.CategoriesGenericView.as_view()),
+    # path("category/<int:pk>/", category_views.CategoriesGenericView.as_view()),
+
+    # dev_38
+    path("", include(router.urls)),
 ]
