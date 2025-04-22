@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from store.models import Category
 
@@ -186,10 +186,10 @@ class CategoryGenericView(RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
 
         instance = self.get_object()
-        print(f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}")
+        print(f"수정 카테고리 이름 {instance.name} -> {request.data.get('name')}")
         respose = super().update(request, *args, **kwargs)  # update 쿼리 날아감
         respose.data = {
-            "message": f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}",
+            "message": f"수정 카테고리 이름 {instance.name} -> {request.data.get('name')}",
             "category": respose.data,
         }
 
@@ -247,3 +247,11 @@ from rest_framework.viewsets import ModelViewSet
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySimpleSerializer
+
+    # http://127.0.0.1:8000/api/categories/{1}
+    @action(detail=True, methods=['get'])
+    def products(self, request, pk=None):
+        category = self.get_object()
+        prodcuts = category.products.all()
+        data = [ {"name": p.name, "price": p.price} for p in prodcuts ]
+        return Response({"category": category.name, "products": data})
