@@ -12,6 +12,7 @@ app_name = "api"
 
 # dev_38
 from rest_framework import routers
+
 router = routers.DefaultRouter()
 router.register("categories", category_views.CategoryViewSet)
 
@@ -20,8 +21,9 @@ category_list = category_views.CategoryViewSet.as_view(
 )
 
 category_detail = category_views.CategoryViewSet.as_view(
-    {"get": "retrieve", "put": "update",'patch': 'partial_update', 'delete': 'destroy'}
+    {"get": "retrieve", "put": "update", "patch": "partial_update", "delete": "destroy"}
 )
+
 
 urlpatterns = [
     # path("hello-world/", base_views.hello_world),
@@ -51,13 +53,24 @@ urlpatterns = [
     # dev_36
     # path("categories/", category_views.CategoriesMixins.as_view()),
     # path("category/<str:name>/", category_views.CategoryMixins.as_view()),
-    
     # dev_37
     # path("categories/", category_views.CategoriesGenericView.as_view()),
-    # path("category/<int:pk>/", category_views.CategoriesGenericView.as_view()),
-
+    # path("category/<int:pk>/", category_views.CategoryGenericView.as_view()),
     # dev_38
-    path("", include(router.urls)),
+    # 이렇게 하면 다음 경로들이 자동으로 만들어집니다:
+    # GET /categories/
+    # POST /categories/
+    # GET /categories/<pk>/
+    # PUT /categories/<pk>/
+    # PATCH /categories/<pk>/
+    # DELETE /categories/<pk>/
+    # path("", include(router.urls)),
+    path("categories/", category_list),
+    path("category/<int:pk>/", category_detail),
 ]
-# http://127.0.0.1:8000/api/categories/
-# http://127.0.0.1:8000/api/categories/1/
+
+
+# from rest_framework import routers
+
+# router = routers.DefaultRouter()
+# router.register("categories", category_views.CategoryViewSet)

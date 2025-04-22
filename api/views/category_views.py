@@ -145,7 +145,7 @@ from rest_framework.exceptions import ValidationError
 
 
 # 같은 이름의 카테고리가 이미 존재할 경우 오류
-class CategoriesGenericView (ListCreateAPIView):
+class CategoriesGenericView(ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     # permission_classes = [IsAuthenticated]
@@ -172,7 +172,7 @@ class CategoriesGenericView (ListCreateAPIView):
 # DELETE  category/{id}    delete category
 
 
-class CategoriesGenericView(RetrieveUpdateDestroyAPIView):
+class CategoryGenericView(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySimpleSerializer
 
@@ -186,10 +186,10 @@ class CategoriesGenericView(RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
 
         instance = self.get_object()
-        print(f'수정 카테고리 이름 {instance.name} -> {request.data.get("name")}')
+        print(f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}")
         respose = super().update(request, *args, **kwargs)  # update 쿼리 날아감
         respose.data = {
-            "message": f"수정 카테고리 이름 {instance.name} -> {request.data.get('name')}",
+            "message": f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}",
             "category": respose.data,
         }
 
@@ -231,9 +231,18 @@ class CategoriesGenericView(RetrieveUpdateDestroyAPIView):
             {"message": "카테고리가 삭제 되었습니다."},
             status=status.HTTP_204_NO_CONTENT,
         )
-    
 
+
+# dev_38
 from rest_framework.viewsets import ModelViewSet
+
+# ModelViewSet 또한 Mixins 집합이므로 아래를 기본적으로 상속 되어 제공되는 메소드가 있음
+# create - POST /
+# list - GET /
+# retrieve - GET /
+# update - PUT /
+# partial_update - PATCH /
+# destroy - DELETE /
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
