@@ -1,4 +1,4 @@
-from rest_framework.decorators import action, api_view
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from store.models import Category
 
@@ -54,7 +54,7 @@ class CategoriesAPI(APIView):
 class CategoryAPI(APIView):
 
     def get(self, request, pk):
-        category = get_object_or_404(Category, id=pk)
+        category = _or_404(Category, id=pk)
         serializer = CategorySimpleSerializer(category)
         return Response(serializer.data)
 
@@ -186,10 +186,10 @@ class CategoryGenericView(RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
 
         instance = self.get_object()
-        print(f"수정 카테고리 이름 {instance.name} -> {request.data.get('name')}")
+        print(f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}")
         respose = super().update(request, *args, **kwargs)  # update 쿼리 날아감
         respose.data = {
-            "message": f"수정 카테고리 이름 {instance.name} -> {request.data.get('name')}",
+            "message": f"수정 카테고리 이름 {instance.name} -> {request.data.get("name")}",
             "category": respose.data,
         }
 
@@ -244,14 +244,52 @@ from rest_framework.viewsets import ModelViewSet
 # partial_update - PATCH /
 # destroy - DELETE /
 
+from rest_framework.decorators import action
+from rest_framework import filters
+
+
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
-    serializer_class = CategorySimpleSerializer
+    serializer_class = CategorySerializer
 
-    # http://127.0.0.1:8000/api/categories/{1}
-    @action(detail=True, methods=['get'])
+    # 검색 필터 및
+    # http://127.0.0.1:8000/api/categories/?search=%EC%9E%90%EB%B0%94
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["name"]  # ?search=자바
+
+    # 정렬 필터 사용
+    # http://127.0.0.1:8000/api/categories/?ordering=description
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ["name","description"] #?ordering=name
+
+    # permission_classes = [IsAuthenticated]
+    # queryset = self.filter_queryset(Category.objects.all())
+
+    # GET /categories/
+    # POST /categories/
+    # GET /categories/<pk>/
+    # PUT /categories/<pk>/
+    # PATCH /categories/<pk>/
+    # DELETE /categories/<pk>/
+    # http://127.0.0.1:8000/api/categories/1/products/ 라는 URL로 호출
+    # detail=True	/api/resource/<pk>/함수이름/	특정 객체에 대해 작동 (PK 필요)
+    # detail=False	/api/resource/함수이름/	전체 또는 리스트 대상 (PK 불필요)
+    @action(detail=True, methods=["get"])
     def products(self, request, pk=None):
         category = self.get_object()
-        prodcuts = category.products.all()
-        data = [ {"name": p.name, "price": p.price} for p in prodcuts ]
+        products = category.products.all()
+        data = [{"name": p.name, "price": p.price} for p in products]
         return Response({"category": category.name, "products": data})
+
+    # GET /api/categories/?search=식품 = 쿼리스트링 방식
+    # GET /api/categories/{search}/ = restful 방식
+
+    # 검색 기능 추가 (쿼리 파라미터: ?search=과일)
+    # def get_queryset(self):
+    #     # queryset = Category.objects.all()
+
+    #     search = self.request.query_params.get("search")
+    #     if search:
+    #         queryset = queryset.filter(name__icontains=search)
+
+    #     return queryset
